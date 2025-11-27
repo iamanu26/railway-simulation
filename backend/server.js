@@ -20,17 +20,36 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log('✅ A user connected:', socket.id);
 
-    // Listen for the master simulation state and broadcast it to everyone
+    // [NEW] 1. Allow Loco Pilots to join a specific "room" for their Train ID
+    socket.on('joinTrainRoom', (trainId) => {
+        socket.join(trainId);
+        console.log(`🚂 Socket ${socket.id} joined room: ${trainId}`);
+    });
+
+    // Listen for the master simulation state
     socket.on('broadcastState', (state) => {
-        io.emit('stateUpdate', state); // Send 'stateUpdate' to all clients
+        
+        // A. Keep sending the FULL list to Station Masters (They need the map)
+        io.emit('stateUpdate', state); 
+
+        // [NEW] B. Send individual updates ONLY to the specific train rooms
+        // This is the "Scaling" magic. 
+        if (Array.isArray(state)) {
+            state.forEach(train => {
+                // Send this specific train object ONLY to the room named "12951", "22440", etc.
+                io.to(train.id).emit('trainSpecificUpdate', train);
+            });
+        }
     });
 
     // Listen for a specific message to a pilot and broadcast it
+    // [OPTIMIZED] We can send this directly to the room now too
     socket.on('controlMessageToPilot', (messageData) => {
-        io.emit('pilotMessage', messageData);
+        // Send to specific train room instead of everyone
+        io.to(messageData.trainId).emit('pilotMessage', messageData);
     });
 
-    // Listen for an emergency stop and broadcast it
+    // Listen for an emergency stop and broadcast it (Global alert is fine here)
     socket.on('emergencyStop', (alertData) => {
         io.emit('emergencyAlert', alertData);
     });
