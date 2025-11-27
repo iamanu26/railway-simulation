@@ -1,7 +1,6 @@
 // Connect to the Node.js server (change 'localhost' to the server's IP if on another PC)
 // Connect to the Node.js server (change 'localhost' to the server's IP if on another PC)
-const socket = io("http://192.168.116.67:3000");
-
+const socket = io("https://railway-simulation.onrender.com");
 // =================================================================================
 // GLOBAL STATE & CONFIGURATION
 // =================================================================================
@@ -805,4 +804,5 @@ function updateDashboardCharts() {
         createOrUpdateChart('delayChart', chartConfigs.delayChart);
     }
 }
+
 
