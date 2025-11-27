@@ -1,5 +1,5 @@
 // Connect to the Node.js server (change 'localhost' to the server's IP if on another PC)
-const socket = io("http://192.168.116.67:3000");
+const socket = io("https://railway-simulation.onrender.com");
 
 let trainDataFromServer = {}; // This will hold the LIVE train status
 
@@ -390,4 +390,5 @@ function requestResume() {
     socket.emit('resumeRequest', resumeData);
     showMessageBox('Request Sent', 'Resume request sent to control. Awaiting clearance.');
 }
+
 
