@@ -356,21 +356,32 @@ document.addEventListener('DOMContentLoaded', function() {
         currentTrainId = trainId;
         addUpdate("Dashboard initialized. Connecting to control server...");
         
-        // The socket listeners are the new way to "listen for updates"
+        // --- PHASE 2 SCALING UPDATES START HERE ---
+
         socket.on('connect', () => {
             console.log('Connected to server with ID:', socket.id);
             addUpdate("✅ Connected to control server. Awaiting live data.");
+            
+            // [NEW] 1. Tell the server to add us to the specific room for this train
+            // This ensures we only get messages meant for us
+            socket.emit('joinTrainRoom', currentTrainId);
         });
 
-        socket.on('stateUpdate', (allTrains) => {
-            const myTrain = allTrains.find(t => t.id === trainId);
-            if (myTrain) {
-                trainDataFromServer = myTrain;
-                updateLocoPilotDashboard();
-            }
+        // [NEW] 2. Listen for the optimized, specific update event
+        // The server now sends ONLY our train object, not the whole array.
+        socket.on('trainSpecificUpdate', (myTrainData) => {
+            // No need to loop or .find() anymore!
+            trainDataFromServer = myTrainData;
+            updateLocoPilotDashboard();
         });
+
+        // [DELETED] The old 'stateUpdate' listener is removed to save bandwidth.
+
+        // --- PHASE 2 SCALING UPDATES END HERE ---
 
         socket.on('pilotMessage', (data) => {
+            // Because we are in a room, the server ensures this message is for us,
+            // but keeping the ID check is a good safety backup.
             if (data.trainId === trainId) {
                 addUpdate(data.message);
             }
@@ -390,5 +401,4 @@ function requestResume() {
     socket.emit('resumeRequest', resumeData);
     showMessageBox('Request Sent', 'Resume request sent to control. Awaiting clearance.');
 }
-
 
