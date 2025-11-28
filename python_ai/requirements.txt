@@ -3,3 +3,6 @@ flask-cors
 numpy
 torch
 gunicorn
+stable-baselines3
+shimmy
+gymnasium
