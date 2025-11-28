@@ -443,7 +443,7 @@ async function generateAIRecommendations() {
     };
 
     try {
-        const response = await fetch('https://495c816fe548.ngrok-free.app/get_recommendation', {
+            const response = await fetch('https://railway-ai-brain.onrender.com/get_recommendation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(simulationState)
@@ -804,5 +804,6 @@ function updateDashboardCharts() {
         createOrUpdateChart('delayChart', chartConfigs.delayChart);
     }
 }
+
 
 
