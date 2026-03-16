@@ -1,6 +1,6 @@
 # 🚂 Real-Time Digital Twin for Railway Logistics with AI Optimization
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://railway-simulation.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://railway-simulation-nine.vercel.app/)
 [![Backend](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://railway-simulation.onrender.com)
 [![AI Engine](https://img.shields.io/badge/AI%20Engine-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://railway-ai-brain.onrender.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
