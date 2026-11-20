@@ -135,7 +135,7 @@ npx http-server .
 
 ## 🎮 Usage Guide
 
-1. **Open the Web App** — Navigate to [https://railway-simulation.vercel.app](https://railway-simulation.vercel.app)
+1. **Open the Web App** 
 
 2. **Station Master Login**
    - Click **"Login as Station Master"**
